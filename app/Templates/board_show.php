@@ -33,7 +33,9 @@
             $colors[2] = 'yellow';
             $colors[3] = 'blue';
         ?>
+        <?php $tmpCat = 0;?>
         <?php foreach ($column['tasks'] as $task): ?>
+        <?php if ($task['category_id'] !== $tmpCat) echo '<h1>'.Helper\in_list($task['category_id'], $categories).'</h1>'; ?>
         <div class="task-board draggable-item task-<?= $colors[$task['owner_id']] ?>"
              data-task-id="<?= $task['id'] ?>"
              data-owner-id="<?= $task['owner_id'] ?>"
@@ -44,6 +46,7 @@
             <?= Helper\template('board_task', array('task' => $task, 'categories' => $categories)) ?>
 
         </div>
+        <?php $tmpCat = $task['category_id']; ?>
         <?php endforeach ?>
     </td>
     <?php endforeach ?>

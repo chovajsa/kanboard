@@ -35,18 +35,12 @@
     <?php endif ?>
 
     <div class="task-board-title">
+        <?php if ($task['category_id']): ?>
+        <?= Helper\in_list($task['category_id'], $categories) ?> / 
+        <?php endif ?>
         <a href="?controller=task&amp;action=show&amp;task_id=<?= $task['id'] ?>" title="<?= t('View this task') ?>"><?= Helper\escape($task['title']) ?></a>
     </div>
 
-<?php endif ?>
-
-
-<?php if ($task['category_id']): ?>
-<div class="task-board-category-container">
-    <span class="task-board-category">
-        <?= Helper\in_list($task['category_id'], $categories) ?>
-    </span>
-</div>
 <?php endif ?>
 
 

@@ -193,7 +193,7 @@ class Task extends Base
         }
 
         if (empty($sorting)) {
-            $table->orderBy('tasks.position', 'ASC');
+            $table->orderBy('tasks.category_id, tasks.position', 'ASC');
         }
         else {
             $table->orderBy($sorting['column'], $sorting['direction']);
