@@ -34,11 +34,6 @@
                 <a class="logo" href="?">kanboard</a>
 
                 <ul>
-                    <?php if (isset($board_selector)): ?>
-                    <li>
-                        <?= Helper\form_select('board-selector', $board_selector) ?>
-                    </li>
-                    <?php endif ?>
                     <li <?= isset($menu) && $menu === 'boards' ? 'class="active"' : '' ?>>
                         <a href="?controller=board"><?= t('Boards') ?></a>
                     </li>
