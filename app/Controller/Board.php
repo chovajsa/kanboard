@@ -120,23 +120,35 @@ class Board extends Base
      */
     public function readonly()
     {
+        
         $token = $this->request->getStringParam('token');
         $project = $this->project->getByToken($token);
 
-        // Token verification
-        if (! $project) {
-            $this->response->text('Not Authorized', 401);
+        $project_id = $project['id'];
+        $user_id = $this->request->getIntegerParam('user_id', UserModel::EVERYBODY_ID);
+
+        $this->checkProjectPermissions($project_id);
+        $projects = $this->project->getAvailableList($this->acl->getUserId());
+
+        if (! isset($projects[$project_id])) {
+            $this->notfound();
         }
 
-        // Display the board with a specific layout
         $this->response->html($this->template->layout('board_public', array(
-            'project' => $project,
+            'users' => $this->project->getUsersList($project_id, true, true),
+            'filters' => array('user_id' => $user_id),
+            'projects' => $projects,
+            'current_project_id' => $project_id,
+            'current_project_name' => $projects[$project_id],
+            'board' => $this->board->get($project_id),
             'columns' => $this->board->get($project['id']),
-            'categories' => $this->category->getList($project['id'], false),
-            'title' => $project['name'],
-            'no_layout' => true,
-            'auto_refresh' => true,
+            'categories' => $this->category->getList($project_id, true, true),
+            'menu' => 'boards',
+            'no_layout'=>true,
+            'title' => $projects[$project_id],
         )));
+
+        
     }
 
     /**

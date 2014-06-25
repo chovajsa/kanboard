@@ -15,19 +15,51 @@
                 </th>
                 <?php endforeach ?>
             </tr>
-            <tr>
-                <?php foreach ($columns as $column): ?>
-                <td class="column <?= $column['task_limit'] && count($column['tasks']) > $column['task_limit'] ? 'task-limit-warning' : '' ?>">
-                    <?php foreach ($column['tasks'] as $task): ?>
-                    <div class="task-board task-<?= $task['color_id'] ?>">
+            
 
-                        <?= Helper\template('board_task', array('task' => $task, 'categories' => $categories, 'not_editable' => true)) ?>
+        <?php foreach ($categories as $cid=>$category) { ?>
+        <?php if ($category == 'All categories') continue; ?>
+        <tr>
+        <td colspan="10"><span style="font-weight:bold; font-size:20px"><strong><?=$category;?></strong></span></td>
+        </tr>
+
+        <tr>
+        <?php foreach ($board as $column): ?>
+            <td
+                id="column-<?= $column['id'] ?>"
+                class="column <?= $column['task_limit'] && count($column['tasks']) > $column['task_limit'] ? 'task-limit-warning' : '' ?>"
+                data-column-id="<?= $column['id'] ?>"
+                data-task-limit="<?= $column['task_limit'] ?>"
+                >
+                <?php 
+                    $colors[0] = '';
+                    $colors[1] = '';
+                    $colors[2] = 'yellow';
+                    $colors[3] = 'blue';
+                ?>
+                <?php $tmpCat = 0;?>
+                <?php foreach ($column['tasks'] as $task): ?>
+                    <?php if ($task['category_id'] == $cid) { ?>
+
+                    
+                    
+                    <div class="task-board task-<?= $colors[$task['owner_id']] ?>"
+                         title="<?= t('View this task') ?>">
+
+                        <?= Helper\template('board_task', array('task' => $task, 'categories' => $categories)) ?>
 
                     </div>
-                    <?php endforeach ?>
-                </td>
+                    <?php } ?>
+
+                    <?php $tmpCat = $task['category_id']; ?>
                 <?php endforeach ?>
-            </tr>
+            </td>
+        <?php endforeach ?>
+        </tr>
+    <?php } ?>
+
+
+
         </table>
     <?php endif ?>
 
