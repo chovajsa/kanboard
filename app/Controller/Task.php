@@ -191,7 +191,7 @@ class Task extends Base
 
             if ($this->task->update($values)) {
                 $this->session->flash(t('Task updated successfully.'));
-                $this->response->redirect('?controller=task&action=show&task_id='.$values['id']);
+                $this->response->redirect('?controller=board&action=show&project_id=1');
             }
             else {
                 $this->session->flashError(t('Unable to update your task.'));
