@@ -31,8 +31,6 @@
     <?php else: ?>
         <header>
             <nav>
-                <a class="logo" href="?">kanboard</a>
-
                 <ul>
                     <li <?= isset($menu) && $menu === 'boards' ? 'class="active"' : '' ?>>
                         <a href="?controller=board"><?= t('Boards') ?></a>

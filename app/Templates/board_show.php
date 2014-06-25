@@ -22,7 +22,7 @@
     <?php foreach ($categories as $cid=>$category) { ?>
         <?php if ($category == 'All categories') continue; ?>
         <tr>
-        <td colspan="10"><?=$category;?></td>
+        <td colspan="10"><span style="font-weight:bold; font-size:20px"><strong><?=$category;?></strong></span></td>
         </tr>
 
         <tr>
