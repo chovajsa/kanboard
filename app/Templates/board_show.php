@@ -20,6 +20,11 @@
     <?php endforeach ?>
 </tr>
     <?php foreach ($categories as $cid=>$category) { ?>
+        <?php if ($category == 'All categories') continue; ?>
+        <tr>
+        <td colspan="10"><?=$category;?></td>
+        </tr>
+
         <tr>
         <?php foreach ($board as $column): ?>
             <td
@@ -37,7 +42,8 @@
                 <?php $tmpCat = 0;?>
                 <?php foreach ($column['tasks'] as $task): ?>
                     <?php if ($task['category_id'] == $cid) { ?>
-                    <?php if ($task['category_id'] !== $tmpCat) echo '<h1>'.Helper\in_list($task['category_id'], $categories).'</h1>'; ?>
+
+                    
                     
                     <div class="task-board draggable-item task-<?= $colors[$task['owner_id']] ?>"
                          data-task-id="<?= $task['id'] ?>"
