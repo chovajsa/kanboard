@@ -27,8 +27,14 @@
         data-column-id="<?= $column['id'] ?>"
         data-task-limit="<?= $column['task_limit'] ?>"
         >
+        <?php 
+            $colors[0] = '';
+            $colors[1] = '';
+            $colors[2] = 'yellow';
+            $colors[3] = 'blue';
+        ?>
         <?php foreach ($column['tasks'] as $task): ?>
-        <div class="task-board draggable-item task-<?= $task['color_id'] ?>"
+        <div class="task-board draggable-item task-<?= $colors[$task['owner_id']] ?>"
              data-task-id="<?= $task['id'] ?>"
              data-owner-id="<?= $task['owner_id'] ?>"
              data-category-id="<?= $task['category_id'] ?>"
