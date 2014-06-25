@@ -11,6 +11,7 @@
             placeholder: "draggable-placeholder",
             stop: function(event, ui) {
                 board_save();
+                location.reload();
             }
         });
 

@@ -19,36 +19,42 @@
     </th>
     <?php endforeach ?>
 </tr>
-<tr>
-    <?php foreach ($board as $column): ?>
-    <td
-        id="column-<?= $column['id'] ?>"
-        class="column <?= $column['task_limit'] && count($column['tasks']) > $column['task_limit'] ? 'task-limit-warning' : '' ?>"
-        data-column-id="<?= $column['id'] ?>"
-        data-task-limit="<?= $column['task_limit'] ?>"
-        >
-        <?php 
-            $colors[0] = '';
-            $colors[1] = '';
-            $colors[2] = 'yellow';
-            $colors[3] = 'blue';
-        ?>
-        <?php $tmpCat = 0;?>
-        <?php foreach ($column['tasks'] as $task): ?>
-        <?php if ($task['category_id'] !== $tmpCat) echo '<h1>'.Helper\in_list($task['category_id'], $categories).'</h1>'; ?>
-        <div class="task-board draggable-item task-<?= $colors[$task['owner_id']] ?>"
-             data-task-id="<?= $task['id'] ?>"
-             data-owner-id="<?= $task['owner_id'] ?>"
-             data-category-id="<?= $task['category_id'] ?>"
-             data-due-date="<?= $task['date_due'] ?>"
-             title="<?= t('View this task') ?>">
+    <?php foreach ($categories as $cid=>$category) { ?>
+        <tr>
+        <?php foreach ($board as $column): ?>
+            <td
+                id="column-<?= $column['id'] ?>"
+                class="column <?= $column['task_limit'] && count($column['tasks']) > $column['task_limit'] ? 'task-limit-warning' : '' ?>"
+                data-column-id="<?= $column['id'] ?>"
+                data-task-limit="<?= $column['task_limit'] ?>"
+                >
+                <?php 
+                    $colors[0] = '';
+                    $colors[1] = '';
+                    $colors[2] = 'yellow';
+                    $colors[3] = 'blue';
+                ?>
+                <?php $tmpCat = 0;?>
+                <?php foreach ($column['tasks'] as $task): ?>
+                    <?php if ($task['category_id'] == $cid) { ?>
+                    <?php if ($task['category_id'] !== $tmpCat) echo '<h1>'.Helper\in_list($task['category_id'], $categories).'</h1>'; ?>
+                    
+                    <div class="task-board draggable-item task-<?= $colors[$task['owner_id']] ?>"
+                         data-task-id="<?= $task['id'] ?>"
+                         data-owner-id="<?= $task['owner_id'] ?>"
+                         data-category-id="<?= $task['category_id'] ?>"
+                         data-due-date="<?= $task['date_due'] ?>"
+                         title="<?= t('View this task') ?>">
 
-            <?= Helper\template('board_task', array('task' => $task, 'categories' => $categories)) ?>
+                        <?= Helper\template('board_task', array('task' => $task, 'categories' => $categories)) ?>
 
-        </div>
-        <?php $tmpCat = $task['category_id']; ?>
+                    </div>
+                    <?php } ?>
+
+                    <?php $tmpCat = $task['category_id']; ?>
+                <?php endforeach ?>
+            </td>
         <?php endforeach ?>
-    </td>
-    <?php endforeach ?>
-</tr>
+        </tr>
+    <?php } ?>
 </table>
