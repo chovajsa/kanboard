@@ -22,7 +22,7 @@
     <?php foreach ($categories as $cid=>$category) { ?>
         <?php if ($category == 'All categories') continue; ?>
         <?php 
-            if (!isset($_GET['showHidden']) && in_array($category, array('Loyalty Program'))) continue;
+            if (!isset($_GET['showHidden']) && in_array($category, array('Loyalty program'))) continue;
         ?>
         <tr>
         <td colspan="10"><span style="font-weight:bold; font-size:20px"><strong><?=$category;?></strong></span></td>
